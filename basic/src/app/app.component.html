@@ -1,0 +1,28 @@
+<div class="container">
+  <h1>Angular Components</h1>
+
+  <!-- чтобы слушать собитие передачи данных
+  используем обратную пивязку 
+  чтобы получить нужные данные в компоненте
+  используем $event-->
+  <app-post-form
+    (onAdd)="updatePosts($event)"
+  >
+  </app-post-form>
+
+  <hr>
+
+  <app-post
+    *ngFor="let p of posts"
+    [post]="p"
+  >
+    <!-- но мы этот контент не увидим
+    потому что в разметке компонета
+    
+    нужен тег <ng-content> для него-->
+    <small *ngIf="p.text.length > 10; else short">Big post</small>
+    <ng-template #short>
+      <small>Little post</small>
+    </ng-template>
+  </app-post>
+</div>
