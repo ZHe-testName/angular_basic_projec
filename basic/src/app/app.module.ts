@@ -4,14 +4,18 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { StyleDirectuve } from './directives/style.directive';
 import { PostFormComponent } from './post-form/post-form.component';
 import { PostComponent } from './post/post.component';
+import { StructDirective } from './directives/struct.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     PostFormComponent,
-    PostComponent
+    PostComponent,
+    StyleDirectuve,
+    StructDirective,
   ],
   imports: [
     BrowserModule,
