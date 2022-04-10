@@ -1,0 +1,75 @@
+<h2>PIPES</h2>
+
+<!-- ангуляр имеет встроеные пайпы -->
+<div>
+    <!-- для работы с числами
+    пайп может принимать параметры 
+
+    первым идет количество чисел до запятой
+    после точки
+    указываем диапазон чисел полсе запятой
+
+    важно помнить что значение не просто обрезается как строка
+    а округляется матеиатически-->
+    <p>{{e | number:'1.1-5'}}</p>
+
+    <p>{{e | number:'3.1-2'}}</p>
+
+    <p>{{e | number:'1.0-0'}}</p>
+
+    <!-- для работы со строками
+    пайпы можно объединять в цепочки вызовов
+    при этом значения будут передаваться последовательно -->
+    <p>{{str | uppercase | lowercase | titlecase}}</p>
+    <!-- также есть пайп слайс
+    который принимает в настройках итеджеры
+    и работает похоже на обычный Array.slice -->
+    <p>{{str | uppercase | slice:1:4}}</p>
+    <!-- для даты -->
+    <p>{{date | date:'shortTime'}}</p>
+    <!-- еще пайпы -->
+    <p>{{float | currency}}</p>
+
+    <p>{{float | percent:'3.0-0'}}</p>
+
+    <!-- приводит к json строке -->
+    <pre>{{obj | json}}</pre>
+
+    <!-- кастомныe пайп -->
+    <p>{{10 | multBy}}</p>
+    <p>{{10 | multBy:3}}</p>
+    <p>{{10 | multBy:12}}</p>
+    <p>{{10 | multBy:3.8}}</p>
+
+    <p>{{'Hello Bitches    ' | exMarks}}</p>
+    <p>{{'Bye' | exMarks}}</p>
+
+    <hr>
+
+    <button (click)="filterCategoty = 'mark'">Mark</button>
+    <button (click)="filterCategoty = 'price'">Price</button>
+
+    <hr>
+
+    <button (click)="addCar()">Add VolksWagen</button>
+
+    <input type="text" [(ngModel)]="search">
+    <!-- можно применять пайпы прямо в цикле
+    структурной или других директив -->
+    <div 
+        clas="card"
+        *ngFor="let c of cars | filter:search:filterCategoty"
+    >
+        <h3>{{c.mark}}</h3>
+        <p>Price: <span>{{c.price}}</span>$. Cylinders Amount: <span>{{c.cylinders}}</span></p>
+    </div>
+
+    <hr>
+
+    <!-- асинхронные пайпы для работы
+    с асинхронным кодом -->
+    <p>Wait for it... {{promise | async}}</p>
+
+    <!-- так же он работает с Observable -->
+    <p>Now is {{curentData | async | date:'mediumTime'}}</p>
+</div>
