@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+//ReactiveFormsModule для реактивных форм
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +13,8 @@ import { PipesComponent } from './pipes/pipes.component';
 import { MultByPipe } from './pipes/mult-by/mult-by.pipe';
 import { ExMarks } from './pipes/exMarks/exMarks.pipe';
 import { FilterPipe } from './pipes/filter/filter.pipe';
+import { LocalServiceComponent } from './service-component/local-service/local-service.component';
+import { FormsComponent } from './form/forms/forms.component';
 
 @NgModule({
   declarations: [
@@ -24,11 +27,14 @@ import { FilterPipe } from './pipes/filter/filter.pipe';
     MultByPipe,
     ExMarks,
     FilterPipe,
+    LocalServiceComponent,
+    FormsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
