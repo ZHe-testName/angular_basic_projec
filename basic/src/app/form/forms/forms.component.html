@@ -9,14 +9,53 @@
 
         <div class="form-control">
             <label>Email</label>
-            <input type="text" placeholder="Email">
-            <div class="validation"></div>
+            <!-- для привязки инпутов с формой в коде
+            используется директива  formControlName-->
+            <input 
+                type="text" 
+                placeholder="Email" 
+                formControlName="email"
+            >
+            <!-- блок отображения сообщений об ошибках валидации -->
+            <!-- у объекта form есть метоб get() который принимает
+            имя конрола и возвращает обект с данными о состоянии валидации -->
+            <div 
+                *ngIf="form.get('email')?.invalid && form.get('email')?.touched"
+                class="validation"
+            >
+            <!-- в объекте errors есть поля которые отвечают за состояние
+            каждого валидатора
+            это можно использовать для коректного отображения соответствующих полей  -->
+            <small
+                *ngIf="form.get('email')?.errors?.['required']"
+            >email is required</small>
+            <br>
+            <small
+                *ngIf="form.get('email')?.errors?.['email']"
+            >enter correct email</small>
+            </div>
         </div>
 
         <div class="form-control">
             <label>Password</label>
-            <input type="text" placeholder="Password">
-            <div class="validation"></div>
+            <input 
+                type="password" 
+                placeholder="Password"
+                formControlName="password"
+            >
+            <div 
+                class="validation"
+                *ngIf="form.get('password')?.invalid && form.get('password')?.touched"
+            >
+                <small
+                    *ngIf="form.get('password')?.errors?.['required']"
+                >password is required</small>
+                <br>
+                <small
+                    *ngIf="form.get('password')?.errors?.['minlength']"
+                >min length must be {{form.get('password')?.errors?.['minlength'].requiredLength}} symbols
+                current symbols amount {{form.get('password')?.errors?.['minlength'].actualLength}}</small>
+            </div>
         </div>
 
         <div class="card">
@@ -50,6 +89,12 @@
             </div>
         </div>
 
-        <button class="btn" type="submit">Send</button>
+        <!-- заблоктровать отправку формы можно с помощю
+        значения свойства объекта формы -->
+        <button 
+            class="btn" 
+            type="submit"
+            [disabled]="form.invalid"
+        >Send</button>
     </form>
 </div>
