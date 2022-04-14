@@ -29,10 +29,24 @@
             <small
                 *ngIf="form.get('email')?.errors?.['required']"
             >email is required</small>
+
             <br>
+
             <small
                 *ngIf="form.get('email')?.errors?.['email']"
             >enter correct email</small>
+
+            <br>
+            
+            <small
+                *ngIf="form.get('email')?.errors?.['restrictedEmail']"
+            >email {{form.get('email')?.value}} is restricted</small>
+
+            <br>
+            
+            <small
+                *ngIf="form.get('email')?.errors?.['uniqEmail']"
+            >email {{form.get('email')?.value}} is occupated</small>
             </div>
         </div>
 
@@ -58,13 +72,17 @@
             </div>
         </div>
 
-        <div class="card">
+        <!-- связываем группу с кодом -->
+        <div 
+            class="card"
+            formGroupName="address"
+        >
             <h3>Address</h3>
         
             <div class="form-control">
                 <label>Country</label>
         
-                <select name="" id="">
+                <select formControlName="country">
                     <option value="ru">russia</option>
                     <option value="ua">Ukraine</option>
                     <option value="en">England</option>
@@ -72,20 +90,44 @@
             </div>
         
             <div class="form-control">
-                <input type="text">
+                <input 
+                    type="text"
+                    formControlName="city"
+                    placeholder="City"
+                >
             </div>
         
-            <button class="btn" type="button">Choose capital</button>
+            <button
+                 class="btn" 
+                 type="button"
+                 (click)="setCapital()"
+            >Choose capital</button>
         </div>
         
-        <div class="card">
+        <div 
+            class="card"
+            formGroupName="skills"
+        >
             <h3>Your Skills</h3>
         
-            <button class="btn" type="button">Add skill</button>
+            <button 
+                class="btn" 
+                type="button"
+                (click)="addSkill()"
+            >Add skill</button>
         
-            <div class="form-control">
-                <label for=""></label>
-                <input type="text">
+            <div 
+                class="form-control"
+                *ngFor="let control of skillsControlsArr.controls; let idx = index"
+            >
+                <label>Skill {{idx + 1}}</label>
+
+                <!-- [formControlName]="idx" для возможности отдельной валидации
+                динамических инпутов -->
+                <input 
+                    type="text"
+                    [formControlName]="idx"
+                >
             </div>
         </div>
 
@@ -98,3 +140,9 @@
         >Send</button>
     </form>
 </div>
+
+<app-switch [(ngModel)]="formButtonState"></app-switch>
+
+<hr>
+
+<p>appState: {{formButtonState}}</p>

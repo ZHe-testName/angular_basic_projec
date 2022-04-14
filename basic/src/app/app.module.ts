@@ -15,6 +15,9 @@ import { ExMarks } from './pipes/exMarks/exMarks.pipe';
 import { FilterPipe } from './pipes/filter/filter.pipe';
 import { LocalServiceComponent } from './service-component/local-service/local-service.component';
 import { FormsComponent } from './form/forms/forms.component';
+import { SwitchComponent } from './switch/switch/switch.component';
+import { HttpComponent } from './http-client/http/http.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -29,12 +32,15 @@ import { FormsComponent } from './form/forms/forms.component';
     FilterPipe,
     LocalServiceComponent,
     FormsComponent,
+    SwitchComponent,
+    HttpComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

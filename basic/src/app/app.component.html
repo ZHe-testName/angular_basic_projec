@@ -1,43 +1,43 @@
-<div class="container">
-  <h1>Angular Components</h1>
+<!-- <div class="container"> -->
+  <!-- <h1>Angular Components</h1> -->
 
   <!-- чтобы слушать собитие передачи данных
   используем обратную пивязку 
   чтобы получить нужные данные в компоненте
   используем $event-->
-  <app-post-form
+  <!-- <app-post-form
     (onAdd)="updatePosts($event)"
   >
-  </app-post-form>
+  </app-post-form> -->
 
-  <hr>
+  <!-- <hr>
 
   <app-post
     *ngFor="let p of posts"
     [post]="p"
   >
-    <div #info>
+    <div #info> -->
       <!-- но мы этот контент не увидим
       потому что в разметке компонета
       
       нужен тег <ng-content> для него-->
-      <small *ngIf="p.text.length > 10; else short">Big post</small>
+      <!-- <small *ngIf="p.text.length > 10; else short">Big post</small>
       <ng-template #short>
         <small>Little post</small>
       </ng-template>
     </div>
   </app-post>
 
-  <hr>
+  <hr> -->
 
-  <div>
-    <h3>Directives</h3>
+  <!-- <div>
+    <h3>Directives</h3> -->
 
     <!-- терерь кастомная директива доступна
     для любого тега 
   
     наши директивы могут принимать объект с определеннымы настройками -->
-    <p 
+    <!-- <p 
       appStyle="green" 
       [dStyles]="{border: '1px solid black', borderRadius: '10px'}"
     >Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
@@ -70,13 +70,15 @@
 
     <button class="btn" (click)="localCounterService.increase()">+</button>
     <button class="btn" (click)="localCounterService.decrease()">-</button>
-  </div>
+  </div> -->
 
-  <hr>
+  <!-- <hr>
 
   <app-local-service></app-local-service>
 
   <hr>
 
-  <app-forms></app-forms>
-</div>
+  <app-forms></app-forms> -->
+<!-- </div> -->
+
+<app-http></app-http>

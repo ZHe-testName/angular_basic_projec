@@ -1,0 +1,17 @@
+div {
+    display: inline-block;
+
+    button {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        color: #fff;
+        background-color: tomato;
+        border: none;
+        outline: none;
+        cursor: pointer;
+
+        &.active {
+            background-color: green ;
+        }
+    }
+}

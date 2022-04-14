@@ -1,0 +1,56 @@
+<div class="container">
+    <h1>Angular HTTP Client</h1>
+
+    <div class="card">
+        <div class="form-control">
+            <input 
+                type="text"
+                [(ngModel)]="todoTitle"
+            >
+        </div>
+
+        <button 
+            class="btn"
+            (click)="addTodo()"
+        >Add</button>
+
+        <button 
+            class="btn"
+            (click)="fetchTodos()"
+        >Upload</button>
+    </div>
+    
+    <div *ngIf="!loading; else loader">
+        <div *ngIf="todos.length; else noTodos">
+            <div 
+            class="card"
+            *ngFor="let todo of todos"
+            >
+                <p>
+                    <span [class.completed]="todo.completed">{{todo.title | titlecase}}</span>
+                    
+                    <span>
+                        <button 
+                            class="btn btn-danger"
+                            (click)="removeTodo(todo.id)"
+                        >Remove</button>
+
+                        <button class="btn" [disabled]="todo.completed">Finish</button>
+                    </span>
+                </p>
+            </div>
+        </div>
+
+        <ng-template #noTodos>
+            <h1>
+                Todos is empty
+            </h1>
+        </ng-template>
+    </div>
+
+    <ng-template #loader>
+        <p>
+            Loading...
+        </p>
+    </ng-template>
+</div>
