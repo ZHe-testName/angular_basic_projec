@@ -1,14 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { delay } from 'rxjs';
-
-interface ToDoList {
-  completed: boolean,
-  id?: number,
-  title: string,
-  userId?: number,
-};
-
+import { ToDoList, TodosService } from 'src/app/services/todos.service';
 @Component({
   selector: 'app-http',
   templateUrl: './http.component.html',
@@ -22,7 +15,9 @@ export class HttpComponent implements OnInit {
 
   loading: boolean = false;
 
-  constructor(private http: HttpClient) { }
+  error: string = '';
+
+  constructor(private todosService: TodosService) {}
 
   ngOnInit(): void {
     //в ангуляр все запросы работают через стримы в RxJS
@@ -32,39 +27,53 @@ export class HttpComponent implements OnInit {
   }
 
   addTodo() {
-    const newTodo: ToDoList = {
+    //используем лггику из нашегш сервиса
+    this.todosService.addTodo({
       title: this.todoTitle,
       completed: false,
-    };
-
-    this.http.post<ToDoList>('https://jsonplaceholder.typicode.com/todos', newTodo)
-      .subscribe(todo => {
-        this.todos.push(todo);
-
-        this.todoTitle = '';
-      });
+    })
+    .subscribe(
+    todo => {  //метод сабскрайб принимает три колбека
+      this.todos.push(todo);  //первый - вызывается когда все хорошо отработало
+                              //второй - когда есть ошибка
+      this.todoTitle = '';    //третий - когда завршится работа метода 
+    },
+    error => {
+      console.log(error.message);
+    });
+      
   };
 
   fetchTodos() {
     this.loading = true;
 
-    this.http.get<ToDoList[]>('https://jsonplaceholder.typicode.com/todos?_limit=4')
-      //в RxJS можно между запросом и слушателем
-      //манипулировать стримом
-      //например ставим задержку на срабатывание запроса
-      .pipe(delay(1000))
-      //вешаем слушатель
-      .subscribe(todo => {
+    this.todosService.fetchTodos()
+      .subscribe(
+      todo => {
         this.todos = todo;
 
         this.loading = false;
+      },
+      error => {
+        this.error = error.message;
       });
   };
 
   removeTodo(id: number | undefined) {
-    this.http.delete<void>(`https://jsonplaceholder.typicode.com/todos/${id}`)
-      .subscribe(() => {
-        this.todos = this.todos.filter(t => t.id !== id);
+      this.todosService.removeTodo(id)
+        .subscribe(() => {
+          this.todos = this.todos.filter(t => t.id !== id);
+        });
+  };
+
+  completeTodo(id: number | undefined) {
+    this.todosService.completeTodo(id)
+      .subscribe(todo => {
+        const curTodo = this.todos.find(t => t.id === todo.id);
+
+        if(curTodo) {
+          curTodo.completed = true;
+        }
       });
   };
 }

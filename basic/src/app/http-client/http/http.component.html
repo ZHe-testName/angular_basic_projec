@@ -19,38 +19,49 @@
             (click)="fetchTodos()"
         >Upload</button>
     </div>
+
+    <p  
+        *ngIf="error; else todosBlock"
+        class="error"
+    >{{error}}</p>
+
+    <ng-template #todosBlock>
+        <div *ngIf="!loading; else loader">
+            <div *ngIf="todos.length; else noTodos">
+                <div 
+                class="card"
+                *ngFor="let todo of todos"
+                >
+                    <p>
+                        <span [class.completed]="todo.completed">{{todo.title | titlecase}}</span>
+                        
+                        <span>
+                            <button 
+                                class="btn btn-danger"
+                                (click)="removeTodo(todo.id)"
+                            >Remove</button>
     
-    <div *ngIf="!loading; else loader">
-        <div *ngIf="todos.length; else noTodos">
-            <div 
-            class="card"
-            *ngFor="let todo of todos"
-            >
-                <p>
-                    <span [class.completed]="todo.completed">{{todo.title | titlecase}}</span>
-                    
-                    <span>
-                        <button 
-                            class="btn btn-danger"
-                            (click)="removeTodo(todo.id)"
-                        >Remove</button>
-
-                        <button class="btn" [disabled]="todo.completed">Finish</button>
-                    </span>
-                </p>
+                            <button 
+                                class="btn" 
+                                [disabled]="todo.completed"
+                                (click)="completeTodo(todo.id)"
+                            >Finish</button>
+                        </span>
+                    </p>
+                </div>
             </div>
+    
+            <ng-template #noTodos>
+                <h1>
+                    Todos is empty
+                </h1>
+            </ng-template>
         </div>
-
-        <ng-template #noTodos>
-            <h1>
-                Todos is empty
-            </h1>
+    
+        <ng-template #loader>
+            <p>
+                Loading...
+            </p>
         </ng-template>
-    </div>
-
-    <ng-template #loader>
-        <p>
-            Loading...
-        </p>
     </ng-template>
 </div>
