@@ -9,7 +9,7 @@ import { ToDoList, TodosService } from 'src/app/services/todos.service';
 })
 export class HttpComponent implements OnInit {
 
-  todos: ToDoList[] = [];
+  todos: ToDoList[] | null = [];
 
   todoTitle: string = '';
 
@@ -32,11 +32,13 @@ export class HttpComponent implements OnInit {
       title: this.todoTitle,
       completed: false,
     })
-    .subscribe(
-    todo => {  //метод сабскрайб принимает три колбека
-      this.todos.push(todo);  //первый - вызывается когда все хорошо отработало
-                              //второй - когда есть ошибка
-      this.todoTitle = '';    //третий - когда завршится работа метода 
+    .subscribe( //метод сабскрайб принимает три колбека
+    todo => {  
+      if(this.todos) {
+        this.todos.push(todo);  //первый - вызывается когда все хорошо отработало
+                                //второй - когда есть ошибка
+        this.todoTitle = '';    //третий - когда завршится работа метода 
+      };
     },
     error => {
       console.log(error.message);
@@ -62,14 +64,16 @@ export class HttpComponent implements OnInit {
   removeTodo(id: number | undefined) {
       this.todosService.removeTodo(id)
         .subscribe(() => {
-          this.todos = this.todos.filter(t => t.id !== id);
+          if(this.todos) {
+            this.todos = this.todos.filter(t => t.id !== id);
+          };
         });
   };
 
   completeTodo(id: number | undefined) {
     this.todosService.completeTodo(id)
       .subscribe(todo => {
-        const curTodo = this.todos.find(t => t.id === todo.id);
+        let curTodo = this.todos ? this.todos.find(t => t.id === todo.id) : null;
 
         if(curTodo) {
           curTodo.completed = true;

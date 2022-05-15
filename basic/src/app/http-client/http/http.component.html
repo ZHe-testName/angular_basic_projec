@@ -27,7 +27,7 @@
 
     <ng-template #todosBlock>
         <div *ngIf="!loading; else loader">
-            <div *ngIf="todos.length; else noTodos">
+            <div *ngIf="todos && todos.length; else noTodos">
                 <div 
                 class="card"
                 *ngFor="let todo of todos"

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Provider } from '@angular/core';
 //ReactiveFormsModule для реактивных форм
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,7 +17,14 @@ import { LocalServiceComponent } from './service-component/local-service/local-s
 import { FormsComponent } from './form/forms/forms.component';
 import { SwitchComponent } from './switch/switch/switch.component';
 import { HttpComponent } from './http-client/http/http.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { AuthInterceptor } from './http-client/auth.interceptor';
+
+const INTERCEPTOR_PROVIDER: Provider = {  //для подкдючения интерсептора нужно создать объект типа Provider
+  provide: HTTP_INTERCEPTORS, //в нем чтобы обяснить ангуляру что будет за сушьность реализуем данное поле
+  useClass: AuthInterceptor,  //сюда подключаем наш интерсептор
+  multi: true,  //если будет нескольео интерсепторов то данная настройка позволяет не перетирать их а добавлять по одному
+};
 
 @NgModule({
   declarations: [
@@ -42,7 +49,7 @@ import {HttpClientModule} from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [INTERCEPTOR_PROVIDER],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
