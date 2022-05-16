@@ -1,0 +1,35 @@
+<nav class="navbar">
+  <h1>
+    <a [routerLink]="['/']">Angular Routing</a>
+  </h1>
+  <ul>
+    <!-- routerLinkActive очень мошьная директива которая добавляет клас элеменнту или его
+    родителю когда их routerLink совпадает 
+    routerLinkActiveOptions директива которую можно настроить и   
+    routerLinkActive будет отрабатывать только если путь действительно совпадает-->
+    <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <!-- чтобы страница не перезагружалась при клике на ссылку
+      можно байндить директиву  routerLink и в массиве передавать туда различние компоненты пути-->
+      <a [routerLink]="['/']"  >Home</a>
+    </li>
+    <!-- если у нас есть просто часть пути то можно не байндить ничего и просто передавть адресс строкой -->
+    <li routerLinkActive="active"><a routerLink="/posts">Posts</a></li>
+    <li routerLinkActive="active"><a [routerLink]="['/about']">About</a></li>
+    <li><button class="btn">Login</button></li>
+    <li><button class="btn">Logout</button></li>
+  </ul>
+</nav>
+
+<div class="container">
+  <div class="card">
+    <!-- в этом теге указывается место куда мы будем рендерить компоненты с массива routes
+    когда ангуляр увидит в адресной строkе совпадение с одним из наших роутов то отрендарит нужный нам компонент -->
+    <router-outlet>
+      
+    </router-outlet>
+
+  </div>
+</div>
+
+
+
