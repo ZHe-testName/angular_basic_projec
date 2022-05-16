@@ -1,9 +1,23 @@
 <h1>Posts page</h1>
 
-<button class="btn">
+<!-- для того чтобы добавить кюери параметры в сторку
+можно использовать директиву [queryParams]
+она принимает объект ключи и значения которого в итоге будут добавлены -->
+
+<!-- также можно передавть в строку фрагменты с помощю директивы  fragment-->
+<button 
+  class="btn"
+  [routerLink]="['/posts']"
+  [queryParams]="{showIds: true}"
+  fragment="fragment"
+>
   Show Ids
 </button>
-<button class="btn">
+
+<button 
+  class="btn"
+  (click)="showIdsProgram()"
+>
   Show Ids (program)
 </button>
 
@@ -11,7 +25,9 @@
   <h4>
     <!-- данная запись позволяет динамически передавать нужные нам элементы в маршрут -->
     <a [routerLink]="['/posts', post.id]">
-      <strong>(ID {{post.id}})</strong>
+
+      <strong *ngIf="showIds">(ID {{post.id}})</strong>
+
       {{post.title}}
     </a>
   </h4>

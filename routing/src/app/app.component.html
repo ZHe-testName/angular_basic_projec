@@ -5,6 +5,7 @@
   <ul>
     <!-- routerLinkActive очень мошьная директива которая добавляет клас элеменнту или его
     родителю когда их routerLink совпадает 
+    
     routerLinkActiveOptions директива которую можно настроить и   
     routerLinkActive будет отрабатывать только если путь действительно совпадает-->
     <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
@@ -15,8 +16,9 @@
     <!-- если у нас есть просто часть пути то можно не байндить ничего и просто передавть адресс строкой -->
     <li routerLinkActive="active"><a routerLink="/posts">Posts</a></li>
     <li routerLinkActive="active"><a [routerLink]="['/about']">About</a></li>
-    <li><button class="btn">Login</button></li>
-    <li><button class="btn">Logout</button></li>
+
+    <li><button class="btn" (click)="auth.logIn()">Login</button></li>
+    <li><button class="btn" (click)="auth.logOut()">Logout</button></li>
   </ul>
 </nav>
 

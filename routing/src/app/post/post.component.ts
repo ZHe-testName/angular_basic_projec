@@ -22,9 +22,18 @@ export class PostComponent implements OnInit {
                                                 //получать от туда какие либо параметры
 
   ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => { //params по сути стрим
-      this.post = this.postService.getById(+params['id']);
+    //с резолвером но статичный
+    //поле data содержит то что мы подключили в объекте роутов
+    //this.post = this.route.snapshot.data['post']; //не самый лутщий выбор так как snapshot это просто снимок пути и он статичен
+
+    this.route.data.subscribe(data => { //в этом варианте объект data динамично изменяется
+      this.post = data['post'];
     });
+
+    //вариант без резолверов
+    // this.route.params.subscribe((params: Params) => { //params по сути стрим
+    //   this.post = this.postService.getById(+params['id']);
+    // });
   }
 
   loadPost() {
