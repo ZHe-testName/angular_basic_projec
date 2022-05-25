@@ -1,0 +1,9 @@
+<button (click)="visible = !visible">Visisble</button>
+
+<hr>
+
+<div 
+  *ngIf="visible"
+  [@bounce]
+  class="rect"
+></div>
